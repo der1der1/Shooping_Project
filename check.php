@@ -35,14 +35,14 @@ if (empty($product_id) == false) {
 <html lang="en">
 
 <head>
-    <!-- bootstrap tag -->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
-    <!-- bootstrap -->
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check</title>
+
+    <!-- 連結到AOS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
     <!-- 將 CSS & JS 文件連結到 HTML -->
     <link rel="stylesheet" href="check.css">
     <script src="check.js"></script>
@@ -123,7 +123,7 @@ if (empty($product_id) == false) {
                     $sum = 0;
                     $id = $row2[0];
                     $buy_bool = $row2[7];
-                    echo '<div id="' . $id . '" class="item">';
+                    echo '<div id="' . $id . '" data-aos="fade-up" class="item" >';
                     echo '<div id="item_pic">';
                     echo '<img src="' . $row2[4] . '" alt="' . $product_name . '"  width="140px" height="140px">';
                     echo '</div>';
@@ -215,6 +215,11 @@ if (empty($product_id) == false) {
             </div>
         </footer>
     </main>
+    <script>
+        AOS.init({
+            duration:500,
+        });
+    </script>
 </body>
 <!-- 偵測如果沒有選擇商品則無法進入結帳頁面 -->
 <?php
