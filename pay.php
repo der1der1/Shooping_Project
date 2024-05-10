@@ -24,6 +24,11 @@ if (empty($user)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pay</title>
+
+    <!-- 連結到AOS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
     <!-- 將 CSS 文件連結到 HTML -->
     <link rel="stylesheet" href="pay.css">
 </head>
@@ -97,7 +102,7 @@ if (empty($user)) {
                 </form>
             </header>
             <main>
-                <div id="items">
+                <div id="items" data-aos="fade-right"data-aos-duration="500">
                     <?php
                     $mysqli = new mysqli("localhost", "root", "den959glow487", "test1");
                     $mysqli->query("SET NAMES 'UTF8' ");
@@ -114,14 +119,14 @@ if (empty($user)) {
                     while ($row1 = mysqli_fetch_row($result1)) {
                         $sum = $row1[5] * $row1[6];
                         echo '
-                    <div id="item">
-                        <div id="picture"><img src="' . $row1[4] . '" alt="' . $row1[3] . '" title="' . $row1[3] . '" width="120px" height="120px"></div>
-                        <div id="info">
-                            <div id="infoName">' . $row1[3] . '</div>
-                            <div id="infoPrice">$' . $row1[5] . ' x ' . $row1[6] . ' = $ ' . $sum . ' </div>
-                        </div>
-                    </div>
-                    ';
+                            <div id="item">
+                                <div id="picture"><img src="' . $row1[4] . '" alt="' . $row1[3] . '" title="' . $row1[3] . '" width="120px" height="120px"></div>
+                                <div id="info">
+                                    <div id="infoName">' . $row1[3] . '</div>
+                                    <div id="infoPrice">$' . $row1[5] . ' x ' . $row1[6] . ' = $ ' . $sum . ' </div>
+                                </div>
+                            </div>
+                        ';
                     }
                     $result1->close();   
                     $mysqli ->close();   //關閉資料庫
@@ -129,7 +134,7 @@ if (empty($user)) {
                     ?>
                 </div>
 
-                <div id="where">
+                <div id="where" data-aos="fade-down"data-aos-duration="900">
                     <!-- 本div中有5個部分 1. toStore; 2. toHome; 3. 收貨姓名; 4. 付款帳號; 5. 地圖API-->
                     <!-- 1. toStore -->
                     <div id="toStore">
@@ -273,7 +278,7 @@ if (empty($user)) {
 
                 ?>
 
-                <div id="trading">
+                <div id="trading" data-aos="fade-left"data-aos-duration="700">
                     <?PHP
                     echo '<table id="check_list"> 購買確認清單';
                     $mysqli = new mysqli("localhost", "root", "den959glow487", "test1");
@@ -376,6 +381,9 @@ if (empty($user)) {
             </main>
         </div>
     </form>
+    <script>
+        AOS.init();
+    </script>
 </body>
 
 </html>
