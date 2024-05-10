@@ -159,17 +159,6 @@ aside {
   }
 }
 
-.red{
-  width: 100%;
-  background-color: red;
-}
-
-#info{
-  height: 25px;
-  background-color: #FFF8DC;
-  overflow: hidden;
-  transition: 0.3s ease;
-}
 .info{
   height: 26px;
   background-color: #DEB887;
@@ -177,6 +166,7 @@ aside {
   padding: 5px;
   border-radius: 7px;
   overflow: hidden;
+  text-overflow: ellipsis;
   font-size: small;
   transition: 0.3s ease;
 }
@@ -216,15 +206,15 @@ aside {
   /* overflow: hidden; */
 }
 #greatPromotion{
-  height: 255px;
+  height: 260px;
   overflow: hidden;
-  margin: 15px 0 7px 0;
+  margin: 15px 0 10px 0;
   /* border: 2px solid red; */
 }
 #interested {
   /* margin-top: 15px; */
   /* width: 90%; */
-  height: 300px;
+  height: 330px;
   border-radius: 7px;
   padding-top: 10px;
   background-color: #f71d62;
@@ -289,7 +279,7 @@ aside {
 }
 
 #normal {
-  margin-top: 7px;
+  margin-top: 15px;
   /* min-width: 400px; */
   border-radius: 7px;
   display: flex;
