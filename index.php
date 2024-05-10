@@ -115,6 +115,10 @@ if (empty($_SESSION["interested_product"])) {
     <!-- import of Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
+    <!-- 連結到AOS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
     <!-- 將 CSS 文件連結到 HTML -->
     <link rel="stylesheet" href="index.css">
     <!-- 將 JS  文件連結到 HTML -->
@@ -222,11 +226,11 @@ if (empty($_SESSION["interested_product"])) {
                         if (empty($info0)) {
                         } else {
                             echo '
-                            <div id="infos" style="margin:0 0 20px 0;">
+                            <div id="infos"  style="margin:0 0 20px 0;">
                                 <h5 style="margin:0 0 10px 0;">您的訊息：</h5>
-                                <div id="info0" class="info">最新！<br>' . $info0 . '</div>
-                                <div id="info1" class="info">' . $info1 . '</div>
-                                <div id="info2" class="info">' . $info2 . '</div>
+                                <div id="info0" data-aos="fade-right" data-aos-duration="300" class="info">&nbsp;&nbsp;【最新】<br>' . $info0 . '</div>
+                                <div id="info1" data-aos="fade-right" data-aos-duration="600" class="info">' . $info1 . '</div>
+                                <div id="info2" data-aos="fade-right" data-aos-duration="900" class="info">' . $info2 . '</div>
                             </div>   
                             ';
                         }
@@ -257,19 +261,37 @@ if (empty($_SESSION["interested_product"])) {
 
                 <div id="contents" class="col-pc-10 col-mobile-12">
                     <!-- 下分三大類greatPromotion、interested、normal -->
-                    <div id="greatPromotion" >
+                    <div id="greatPromotion">
                         <!-- Retrieved the div code from Bootstrap -->
-                        <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                        <!-- 廣告圖display -->
+                        <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel" data-aos="zoom-in"data-aos-duration="400">
                             <div class="carousel-inner">
-                                <div class="carousel-item active" data-bs-interval="4000">
-                                    <img src="./img/ad2.png" class="d-block w-100" height="255px">
-                                </div>
-                                <div class="carousel-item" data-bs-interval="4000">
-                                    <img src="./img/ad3.png" class="d-block w-100" height="255px">
-                                </div>
-                                <div class="carousel-item" data-bs-interval="4000">
-                                    <img src="./img/ad4.png" class="d-block w-100" height="255px">
-                                </div>
+                                <?php
+                                //再開資料庫
+                                $mysqli = new mysqli("localhost", "root", "den959glow487", "test1");
+                                $mysqli->query("SET NAMES 'UTF8' ");
+                                $result_pic_ads = $mysqli->query('SELECT * FROM test1.`pic_ads`'); //抓table
+                                //第一則廣告的標籤內需加入 active
+                                $first = true;
+                                while ($row_pic_ads = mysqli_fetch_row($result_pic_ads)) {
+                                    if ($first = true) {
+                                        echo '
+                                        <div class="carousel-item active" data-bs-interval="4000">
+                                            <img src="' . $row_pic_ads[2] . '" alt="' . $row_pic_ads[1] . '" class="d-block w-100" height="255px">
+                                        </div>
+                                        ';
+                                        $first = false;
+                                    } else {
+                                        echo '
+                                        <div class="carousel-item" data-bs-interval="4000">
+                                            <img src="' . $row_pic_ads[2] . '" alt="' . $row_pic_ads[1] . '" class="d-block w-100" height="255px">
+                                        </div>
+                                        ';
+                                    }
+                                }
+                                $result_pic_ads->close();
+                                $mysqli->close();   //關閉資料庫
+                                ?>
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -280,8 +302,10 @@ if (empty($_SESSION["interested_product"])) {
                                 <span class="visually-hidden">Next</span>
                             </button>
                         </div>
+                        <!-- Bootstrap end -->
+
                     </div>
-                    <div id="interested">
+                    <div id="interested" data-aos="zoom-in"data-aos-duration="800">
                         <div id="interested_title">
                             <p>推薦你可能也喜歡!</p>
                         </div>
@@ -302,7 +326,7 @@ if (empty($_SESSION["interested_product"])) {
                             //row[7] category
                             //row[8] selected
                             while ($row3 = mysqli_fetch_row($result3)) {
-                                echo '<a href="itemPage.php?id=' . $row3[0] . '">';
+                                echo '<a href="itemPage.php?id=' . $row3[0] . '" >';
                                 echo '<button id="item" height: "210px" width: "180px">';
                                 echo '<img src="' . $row3[2] . '" alt="" title="優質特賣" width="110px" height="110px">';
                                 echo '<div id="level1">';
@@ -330,7 +354,7 @@ if (empty($_SESSION["interested_product"])) {
                         </div>
                     </div>
 
-                    <div id="normal">
+                    <div id="normal" data-aos="fade-up"data-aos-anchor-placement="top-bottom">
                         <?php //1.先檢查並執行右欄分類；2.在檢查上方站內搜尋；3.若皆無再執行原應出現的所有物件else。                        
                         if (empty($home_search_category) == false) {  //判讀$home_search_category不是空的，就要執行類別查詢
                             $mysqli = new mysqli("localhost", "root", "den959glow487", "test1"); //最後一個是資料庫Name
@@ -352,7 +376,7 @@ if (empty($_SESSION["interested_product"])) {
                                 //row[6] ori_price
                                 //row[7] category
                                 //row[8] selected
-                                echo '<a href="itemPage.php?id=' . $row6[0] . '">';
+                                echo '<a href="itemPage.php?id=' . $row6[0] . '" >';
                                 echo '<button id="oneProduct" height: "120px" width: "240px">';
                                 echo '<div id="pic">';
                                 echo '<img src="' . $row6[2] . '" alt="" title="' . $row6[3] . '" width="110px" height="110px">';
@@ -405,6 +429,11 @@ if (empty($_SESSION["interested_product"])) {
         </div>
         <div id="cont"><a href="contact.php">Contact Us</a> </div>
     </footer>
+    <script>
+        AOS.init({
+            duration:500,
+        });
+    </script>
 
 </body>
 <span id="toTop"> <a href="#top"><img src="icon/arrow-up.svg" alt="" title="to top" height="35px" width="35px"></a></span>
